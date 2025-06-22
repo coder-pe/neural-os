@@ -13,30 +13,30 @@ ISO = NeuralOS.iso
 all: $(ISO)
 
 $(BUILD_DIR):
-\tmkdir -p $(BUILD_DIR)
+	mkdir -p $(BUILD_DIR)
 
 $(KERNEL_ELF): $(BUILD_DIR) boot/boot.o kernel/kernel.o ai/ai.o
-\t$(LD) $(LDFLAGS) -o $@ $^
+	$(LD) $(LDFLAGS) -o $@ $^
 
 boot/boot.o: boot/boot.S
-\t$(AS) -f elf32 $< -o $@
+	$(AS) -f elf32 $< -o $@
 
 kernel/kernel.o: kernel/kernel.c
-\t$(CC) $(CFLAGS) -c $< -o $@
+	$(CC) $(CFLAGS) -c $< -o $@
 
 ai/ai.o: ai/ai.c
-\t$(CC) $(CFLAGS) -c $< -o $@
+	$(CC) $(CFLAGS) -c $< -o $@
 
 $(ISO): $(KERNEL_ELF)
-\tmkdir -p $(ISO_DIR)/boot/grub
-\tcp $< $(ISO_DIR)/boot/kernel.elf
-\techo 'set timeout=0' > $(ISO_DIR)/boot/grub/grub.cfg
-\techo 'set default=0' >> $(ISO_DIR)/boot/grub/grub.cfg
-\techo 'menuentry "Neural OS" { multiboot /boot/kernel.elf }' >> $(ISO_DIR)/boot/grub/grub.cfg
-\tgrub-mkrescue -o $@ $(ISO_DIR)
+	mkdir -p $(ISO_DIR)/boot/grub
+	cp $< $(ISO_DIR)/boot/kernel.elf
+	echo 'set timeout=0' > $(ISO_DIR)/boot/grub/grub.cfg
+	echo 'set default=0' >> $(ISO_DIR)/boot/grub/grub.cfg
+	echo 'menuentry "Neural OS" { multiboot /boot/kernel.elf }' >> $(ISO_DIR)/boot/grub/grub.cfg
+	grub-mkrescue -o $@ $(ISO_DIR)
 
 run: $(ISO)
-\tqemu-system-i386 -cdrom $(ISO)
+	qemu-system-i386 -cdrom $(ISO)
 
 clean:
-\trm -rf $(BUILD_DIR) $(ISO_DIR) $(ISO)
+	rm -rf $(BUILD_DIR) $(ISO_DIR) $(ISO)
