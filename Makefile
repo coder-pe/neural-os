@@ -40,3 +40,5 @@ run: $(ISO)
 
 clean:
 	rm -rf $(BUILD_DIR) $(ISO_DIR) $(ISO)
+	rm -rf boot/boot.o ai/ai.o kernel/kernel.o
+
