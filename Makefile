@@ -15,8 +15,8 @@ all: $(ISO)
 $(BUILD_DIR):
 	mkdir -p $(BUILD_DIR)
 
-$(KERNEL_ELF): $(BUILD_DIR) boot/boot.o kernel/kernel.o ai/ai.o
-	$(LD) $(LDFLAGS) -o $@ $^
+$(KERNEL_ELF): boot/boot.o kernel/kernel.o ai/ai.o | $(BUILD_DIR)
+	$(LD) $(LDFLAGS) -o $@ boot/boot.o kernel/kernel.o ai/ai.o
 
 boot/boot.o: boot/boot.S
 	$(AS) -f elf32 $< -o $@

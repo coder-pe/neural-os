@@ -2,21 +2,16 @@
 
 A minimal educational operating system written in **C** that demonstrates fundamental OS concepts and embeds a tiny AI demo.
 
-## Features
-
-* Multiboot‑compatible kernel loaded by GRUB
-* VGA text console output
-* Tiny AI perceptron (logical OR) running inside the kernel
-* Modular code layout (`boot`, `kernel`, `ai`)
-* Ready to build and run with **QEMU**
-
-## Prerequisites
+## Prerequisitos (dependencias necesarias)
 
 ```bash
-sudo apt install build-essential grub-pc-bin xorriso qemu-system-i386 nasm
+sudo apt install build-essential nasm xorriso grub-pc-bin qemu-system-i386 mtools
+sudo apt install build-essential bison flex libgmp3-dev libmpc-dev libmpfr-dev texinfo
+sudo apt install mtools xorriso grub-pc-bin
 ```
-You will also need an **i686‑elf cross‑compiler** (`i686-elf-gcc`, `i686-elf-ld`).  
-Follow any standard OSDev guide to build or install these tools and make sure they are in your `$PATH`.
+**Nota:** También necesitas un compilador cruzado `i686-elf-gcc` y `i686-elf-ld`.  
+Puedes compilarlo tú mismo o instalarlo desde un paquete confiable.  
+Una guía para compilarlo está disponible en https://wiki.osdev.org/GCC_Cross-Compiler
 
 ## Building
 
@@ -47,9 +42,9 @@ You should see the perceptron evaluating the OR truth table on the screen.
 ├── Makefile
 ├── linker.ld
 ├── boot
-│   └── boot.S
+│   └── boot.S
 ├── kernel
-│   └── kernel.c
+│   └── kernel.c
 └── ai
     └── ai.c
 ```
